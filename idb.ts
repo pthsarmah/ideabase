@@ -1,5 +1,6 @@
 import { $ } from 'bun';
 import { program } from 'commander';
+import { tmpdir } from 'node:os';
 
 program
 	.name("idb")
@@ -10,9 +11,23 @@ program
 	.command('init')
 	.description('Init a global repo of ideas')
 	.argument('[directory]', 'Directory to store ideas')
-	.action(async () => {
-		await $`mkdir .idb`.quiet();
+	.action(async (dir) => {
+		if (dir) {
+			await $`ls ${dir}`.quiet();
+			await $`mkdir -p ${dir}/.idb`.quiet();
+		} else {
+			await $`mkdir -p ${tmpdir()}/.idb`.quiet();
+		}
 	});
+
+program
+	.command('list')
+	.description('List ideas')
+	.option('-m', 'list only marked ideas')
+	.option('-a', 'list all ideas')
+	.action(() => {
+
+	})
 
 //add ideas
 program
