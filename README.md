@@ -1,15 +1,32 @@
 # ideabase
 
-To install dependencies:
+source control for your brilliant ideas!!
+
+## install
 
 ```bash
 bun install
+bun link
 ```
 
-To run:
+## usage
 
-```bash
-bun run index.ts
 ```
+Usage: idb [options] [command]
 
-This project was created using `bun init` in bun v1.3.5. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+source control for your brilliant ideas!!
+
+Options:
+  -V, --version                                  output the version number
+  -h, --help                                     display help for command
+
+Commands:
+  init                                           Init a global repo of ideas
+  list [options]                                 List ideas
+  add [options] <idea>                           Add an idea
+  edit <hash> <-t, --title> <-d, --description>  Edit an ideas (NOT COMPLETE)
+  mark <hash>                                    Mark idea as done/complete
+  unmark <hash>                                  Unmark idea from done/complete
+  rm                                             Remove an idea (NOT COMPLETE)
+  help [command]                                 display help for command
+```
