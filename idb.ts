@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 import { program } from 'commander';
-import { tmpdir } from 'node:os';
+import { homedir } from 'node:os';
 import fs from 'fs';
 import { existsSync } from 'node:fs';
 import { showHashesWithTitles, showIdeaViewer } from './tui';
@@ -15,11 +15,11 @@ program
 	.command('init')
 	.description('init a global repo of ideas')
 	.action(async () => {
-		fs.mkdir(`${tmpdir()}/.idb`, { recursive: true }, (err) => {
+		fs.mkdir(`${homedir()}/.idb`, { recursive: true }, (err) => {
 			if (err)
 				console.error(`could not create .idb ${err}`);
 		});
-		Bun.write(`${tmpdir()}/.idb/ideas.json`, '[]');
+		Bun.write(`${homedir()}/.idb/ideas.json`, '[]');
 	});
 
 program
@@ -30,7 +30,7 @@ program
 	.option('-H, --hash', 'list only hashes with titles')
 	.action(async (options) => {
 
-		const ideasFile = `${tmpdir()}/.idb/ideas.json`;
+		const ideasFile = `${homedir()}/.idb/ideas.json`;
 		const ideasFileExists = await Bun.file(ideasFile).exists();
 
 		if (!ideasFileExists) {
@@ -71,9 +71,9 @@ program
 		const body = `idea: ${idea}\ndescription: ${description ?? `no description`}`;
 		const hash = new Bun.CryptoHasher("sha256").update(body).digest("hex");
 
-		const ideasFile = `${tmpdir()}/.idb/ideas.json`;
+		const ideasFile = `${homedir()}/.idb/ideas.json`;
 
-		if (!existsSync(`${tmpdir()}/.idb`)) {
+		if (!existsSync(`${homedir()}/.idb`)) {
 			console.error(".idb directory does not exist. Run 'init'");
 			return;
 		}
@@ -104,9 +104,9 @@ program
 	.option('-t, --title <string>', 'new title')
 	.option('-d, --description <string>', 'new description')
 	.action(async (hash, options) => {
-		const ideasFile = `${tmpdir()}/.idb/ideas.json`;
+		const ideasFile = `${homedir()}/.idb/ideas.json`;
 
-		if (!existsSync(`${tmpdir()}/.idb`)) {
+		if (!existsSync(`${homedir()}/.idb`)) {
 			console.error(".idb directory does not exist. Run 'init'");
 			return;
 		}
@@ -138,9 +138,9 @@ program
 	.description('mark idea as done/complete')
 	.argument('<hash>', 'hash of your idea')
 	.action(async (hash) => {
-		const ideasFile = `${tmpdir()}/.idb/ideas.json`;
+		const ideasFile = `${homedir()}/.idb/ideas.json`;
 
-		if (!existsSync(`${tmpdir()}/.idb`)) {
+		if (!existsSync(`${homedir()}/.idb`)) {
 			console.error(".idb directory does not exist. Run 'init'");
 			return;
 		}
@@ -168,9 +168,9 @@ program
 	.description('unmark idea from done/complete')
 	.argument('<hash>', 'hash of your idea')
 	.action(async (hash) => {
-		const ideasFile = `${tmpdir()}/.idb/ideas.json`;
+		const ideasFile = `${homedir()}/.idb/ideas.json`;
 
-		if (!existsSync(`${tmpdir()}/.idb`)) {
+		if (!existsSync(`${homedir()}/.idb`)) {
 			console.error(".idb directory does not exist. Run 'init'");
 			return;
 		}
@@ -199,9 +199,9 @@ program
 	.description('remove idea')
 	.argument('<hash>', 'hash of your idea')
 	.action(async (hash) => {
-		const ideasFile = `${tmpdir()}/.idb/ideas.json`;
+		const ideasFile = `${homedir()}/.idb/ideas.json`;
 
-		if (!existsSync(`${tmpdir()}/.idb`)) {
+		if (!existsSync(`${homedir()}/.idb`)) {
 			console.error(".idb directory does not exist. Run 'init'");
 			return;
 		}
@@ -231,9 +231,9 @@ program
 	.description('remove idea')
 	.argument('<hash>', 'hash of your idea')
 	.action(async (hash) => {
-		const ideasFile = `${tmpdir()}/.idb/ideas.json`;
+		const ideasFile = `${homedir()}/.idb/ideas.json`;
 
-		if (!existsSync(`${tmpdir()}/.idb`)) {
+		if (!existsSync(`${homedir()}/.idb`)) {
 			console.error(".idb directory does not exist. Run 'init'");
 			return;
 		}
